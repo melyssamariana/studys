@@ -1,6 +1,6 @@
 # Ignorar arquivos de compilação de qualquer subdiretório
 **/*.o
-**/*.sim
+**/*sim
 **/*.vcd
 **/*.exe
 **/*.out
@@ -9,6 +9,7 @@
 **/*.obj
 **/*.bin
 **/*.elf
+**/*.vcd
 
 # Ignorar arquivos de dependência
 **/*.d

@@ -1,0 +1,30 @@
+# Ignorar arquivos de compilação de qualquer subdiretório
+**/*.o
+**/*.sim
+**/*.vcd
+**/*.exe
+**/*.out
+**/*.log
+**/*.tmp
+**/*.obj
+**/*.bin
+**/*.elf
+
+# Ignorar arquivos de dependência
+**/*.d
+**/*.dep
+
+# Ignorar diretórios de build
+/build/
+/bin/
+/obj/
+/lib/
+/CMakeFiles/
+/cmake-build-*/
+
+# Ignorar arquivos de backup e editor
+*~
+*.swp
+*.swo
+.DS_Store
+Thumbs.db

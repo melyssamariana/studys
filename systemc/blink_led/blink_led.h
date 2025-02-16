@@ -23,7 +23,7 @@ SC_MODULE(BlinkLED) { // Defines a SystemC module named BlinkLED
         while (true) {
             wait(); // Wait for clock edge
             counter++;
-            if (counter == 50000000) { 
+            if (counter == 5000) { //50000000
                 led_state = !led_state;
                 LED.write(led_state);
                 counter = 0;

@@ -1,32 +1,34 @@
-/*
-Structure of a SystemC Testbench
-
-- Include Libraries (#include) → Import SystemC and module headers.
-- Declare Signals (sc_signal) → Create wires to connect modules.
-- Instantiate the Module (BlinkLED) → Create and connect an instance of the design.
-- Generate the Clock (for loop or SC_METHOD) → Simulate a hardware clock.
-- Run the Simulation (sc_start) → Execute for a given time.
-*/
-
 #include <systemc.h>
 #include "blink_led.h"
+#include "blink_led_stimuli.h"
 
-int sc_main(int argc, char* argv[]) {
+int sc_main(int argc, char *argv[]) {
+    sc_trace_file *tf;
+
+    // Create signals
     sc_signal<bool> clk;
-    sc_signal<bool> led; 
+    sc_signal<bool> led;
 
-    BlinkLED blinker("BLINK"); // Instantiate the BlinkLED module
+    // Instantiate modules
+    BlinkLED blinker("BLINKER");
+    StimuliBlink stimuli("STIMULI");
+
+    // Connect signals
     blinker.CLK(clk);
     blinker.LED(led);
+    stimuli.CLK(clk);
 
+    // Create waveform file
+    tf = sc_create_vcd_trace_file("waves");
+    tf->set_time_unit(1, SC_NS);
+    sc_trace(tf, clk, "clk");
+    sc_trace(tf, led, "led");
 
-    sc_start(0, SC_NS); // Start the simulation
-  
-  	// Generate clock: Toggle every 10 ns (50 MHz)
-    for (int i = 0; i < 100000000; i++) { // Simulate for 100 ms
-        clk.write(i % 2);  // Toggle the clock signal (0 → 1 → 0)
-        sc_start(10, SC_NS);   // Advance simulation by 10 ns
-    }
+    // Run simulation for 1 second (1e9 ns)
+    sc_start(1e9, SC_NS);
+
+    // Close VCD file
+    sc_close_vcd_trace_file(tf);
 
     return 0;
 }
